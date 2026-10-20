@@ -1,0 +1,6 @@
+{
+  "name": "Gửi Em, Người Anh Yêu ❤️",
+  "description": "Trang web thư tình lãng mạn với các thông điệp bay bổng, bầu trời sao, hiệu ứng kéo thả tin nhắn và phong thư bí mật gửi tặng người thương.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

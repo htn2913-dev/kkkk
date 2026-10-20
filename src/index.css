@@ -1,0 +1,181 @@
+@import "tailwindcss";
+
+@layer base {
+  * {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    margin: 0;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background: radial-gradient(
+      ellipse at center,
+      #20051d 0%, #09000d 50%, #030006 100%
+    );
+    font-family: 'Quicksand', "Segoe UI", Arial, sans-serif;
+    color: white;
+  }
+}
+
+.font-handwriting {
+  font-family: 'Dancing Script', cursive;
+}
+
+.font-serif-romantic {
+  font-family: 'Playfair Display', serif;
+}
+
+/* Floating message upward animation */
+@keyframes flyUp {
+  0% {
+    transform: translateY(0) translateX(0) scale(0.8);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  50% {
+    transform: translateX(18px) scale(1.05);
+  }
+  85% {
+    opacity: 0.85;
+  }
+  100% {
+    transform: translateY(-120vh) translateX(35px) scale(1);
+    opacity: 0;
+  }
+}
+
+/* Floating elements in sky */
+.floating {
+  position: absolute;
+  bottom: -60px;
+  white-space: nowrap;
+  color: #ff9dce;
+  text-shadow: 0 0 8px #ff168b, 0 0 18px #ff168b, 0 0 32px rgba(255, 22, 139, 0.5);
+  animation: flyUp linear forwards;
+  pointer-events: auto;
+  user-select: none;
+  cursor: grab;
+  touch-action: none;
+  z-index: 15;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.floating:hover {
+  filter: brightness(1.25);
+  transform: scale(1.05);
+}
+
+.floating.dragging {
+  cursor: grabbing !important;
+  animation: none !important;
+  z-index: 50 !important;
+  filter: brightness(1.4) drop-shadow(0 0 18px #ff168b);
+}
+
+/* Floating Heart Upwards */
+@keyframes heartUp {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(0.6);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.85;
+  }
+  100% {
+    transform: translateY(-115vh) rotate(35deg) scale(1.3);
+    opacity: 0;
+  }
+}
+
+.heart {
+  position: fixed;
+  bottom: -40px;
+  color: #ff6bb7;
+  text-shadow: 0 0 15px #ff168b, 0 0 25px rgba(255, 22, 139, 0.4);
+  pointer-events: none;
+  animation: heartUp linear forwards;
+  z-index: 5;
+  user-select: none;
+}
+
+/* Heading glow */
+@keyframes titleGlow {
+  from {
+    text-shadow: 0 0 10px #ff168b, 0 0 20px #ff168b;
+  }
+  to {
+    text-shadow: 0 0 20px #ff168b, 0 0 40px #ff168b, 0 0 65px #ff4ba5;
+  }
+}
+
+.animate-title-glow {
+  animation: titleGlow 2.4s infinite alternate ease-in-out;
+}
+
+@keyframes fadeInOut {
+  from { opacity: 0.65; }
+  to { opacity: 1; }
+}
+
+.animate-fade-pulse {
+  animation: fadeInOut 3s infinite alternate ease-in-out;
+}
+
+/* Envelope floating and seal pulse */
+@keyframes envelopeFloat {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-9px) rotate(-2deg);
+  }
+}
+
+.animate-envelope-float {
+  animation: envelopeFloat 2.6s ease-in-out infinite;
+}
+
+@keyframes sealBeat {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.22);
+  }
+}
+
+.animate-seal-beat {
+  animation: sealBeat 1.1s infinite cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+@keyframes hintBlink {
+  0% { opacity: 0.4; transform: translateY(0); }
+  50% { opacity: 1; transform: translateY(-3px); }
+  100% { opacity: 0.4; transform: translateY(0); }
+}
+
+.animate-hint-blink {
+  animation: hintBlink 1.8s infinite ease-in-out;
+}
+
+/* Vintage Paper scroll styling */
+.custom-paper-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+.custom-paper-scroll::-webkit-scrollbar-track {
+  background: rgba(255, 220, 235, 0.4);
+  border-radius: 8px;
+}
+.custom-paper-scroll::-webkit-scrollbar-thumb {
+  background: #ff8cb8;
+  border-radius: 8px;
+}
+.custom-paper-scroll::-webkit-scrollbar-thumb:hover {
+  background: #e92c7a;
+}

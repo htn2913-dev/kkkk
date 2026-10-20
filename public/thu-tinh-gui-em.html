@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Gửi em, người anh yêu ❤️</title>
+<style>
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    margin: 0;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background: radial-gradient(
+        ellipse at center,
+        #20051d 0%, #09000d 50%, #030006 100%
+    );
+    font-family: "Segoe UI", Arial, sans-serif;
+    color: white;
+    user-select: none;
+    touch-action: none;
+}
+
+#sky {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.floating {
+    position: absolute;
+    bottom: -60px;
+    white-space: nowrap;
+    color: #ff9dce;
+    text-shadow: 0 0 8px #ff168b, 0 0 18px #ff168b, 0 0 30px rgba(255, 22, 139, 0.5);
+    animation: flyUp linear forwards;
+    pointer-events: auto;
+    user-select: none;
+    cursor: grab;
+    touch-action: none;
+    z-index: 15;
+    font-weight: 500;
+}
+
+.floating:hover {
+    filter: brightness(1.2);
+    transform: scale(1.05);
+}
+
+.floating.dragging {
+    cursor: grabbing !important;
+    animation: none !important;
+    z-index: 50 !important;
+    filter: brightness(1.4) drop-shadow(0 0 18px #ff168b);
+}
+
+@keyframes flyUp {
+    0% {
+        transform: translateY(0) translateX(0) scale(.8);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    50% {
+        transform: translateX(18px) scale(1.05);
+    }
+    85% {
+        opacity: .85;
+    }
+    100% {
+        transform: translateY(-120vh) translateX(35px) scale(1);
+        opacity: 0;
+    }
+}
+
+.heading {
+    position: fixed;
+    top: 7%;
+    left: 0;
+    width: 100%;
+    padding: 0 12px;
+    text-align: center;
+    color: #ffacd4;
+    font-size: clamp(24px, 5vw, 40px);
+    font-weight: bold;
+    text-shadow: 0 0 10px #ff168b, 0 0 25px #ff168b, 0 0 45px #ff168b;
+    animation: titleGlow 2s infinite alternate;
+    pointer-events: none;
+    z-index: 20;
+}
+
+.subtitle {
+    position: fixed;
+    top: 17%;
+    width: 100%;
+    text-align: center;
+    padding: 0 15px;
+    color: #ffd2e8;
+    font-size: clamp(13px, 2.5vw, 17px);
+    letter-spacing: 1px;
+    text-shadow: 0 0 12px #ff4ba5;
+    animation: fadeInOut 3s infinite alternate;
+    pointer-events: none;
+    z-index: 20;
+}
+
+@keyframes titleGlow {
+    from {
+        text-shadow: 0 0 10px #ff168b, 0 0 20px #ff168b;
+    }
+    to {
+        text-shadow: 0 0 20px #ff168b, 0 0 40px #ff168b, 0 0 60px #ff4ba5;
+    }
+}
+
+@keyframes fadeInOut {
+    from { opacity: .65; }
+    to { opacity: 1; }
+}
+
+.heart {
+    position: fixed;
+    bottom: -40px;
+    color: #ff6bb7;
+    text-shadow: 0 0 15px #ff168b;
+    pointer-events: none;
+    animation: heartUp linear forwards;
+    z-index: 5;
+}
+
+@keyframes heartUp {
+    0% {
+        transform: translateY(0) rotate(0deg) scale(.6);
+        opacity: 0;
+    }
+    15% { opacity: .8; }
+    100% {
+        transform: translateY(-110vh) rotate(35deg) scale(1.3);
+        opacity: 0;
+    }
+}
+
+.envelope {
+    position: fixed;
+    right: 28px;
+    bottom: 60px;
+    width: 100px;
+    height: 68px;
+    background: linear-gradient(135deg, #ffb4d9, #ff5ca8);
+    border-radius: 6px;
+    cursor: pointer;
+    z-index: 30;
+    box-shadow: 0 0 18px #ff238e, 0 0 35px #ff238e66;
+    animation: envelopeFloat 2.5s ease-in-out infinite;
+    transition: box-shadow .3s, transform .2s;
+    touch-action: manipulation;
+}
+
+.envelope:hover {
+    box-shadow: 0 0 28px #ff238e, 0 0 50px #ff238e;
+    transform: scale(1.05);
+}
+
+.envelope::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-left: 50px solid transparent;
+    border-right: 50px solid transparent;
+    border-top: 38px solid #ffe0ef;
+    z-index: 1;
+}
+
+.heart-seal {
+    position: absolute;
+    z-index: 2;
+    top: 28px;
+    left: 38px;
+    font-size: 25px;
+    filter: drop-shadow(0 0 5px #ff0066);
+    pointer-events: none;
+    animation: sealBeat 1s infinite;
+}
+
+@keyframes envelopeFloat {
+    0%, 100% { transform: translateY(0) rotate(0); }
+    50% { transform: translateY(-7px) rotate(-2deg); }
+}
+
+@keyframes sealBeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.18); }
+}
+
+.hint {
+    position: fixed;
+    right: 10px;
+    bottom: 140px;
+    color: #ffb7d9;
+    font-size: 13px;
+    text-shadow: 0 0 10px #ff168b;
+    z-index: 30;
+    animation: blink 1.5s infinite alternate;
+    pointer-events: none;
+    text-align: center;
+}
+
+@keyframes blink {
+    to { opacity: .5; }
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(5, 0, 10, .88);
+    backdrop-filter: blur(8px);
+    z-index: 100;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+}
+
+.paper {
+    background: linear-gradient(145deg, #fff7fb, #ffe8f3);
+    color: #792247;
+    width: 100%;
+    max-width: 460px;
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 26px;
+    border: 1px solid #ff9bc9;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 0 30px #ff3998, 0 0 65px rgba(255, 22, 139, 0.4);
+    animation: open .4s ease;
+    -webkit-overflow-scrolling: touch;
+}
+
+.paper h2 {
+    color: #e92c7a;
+    text-shadow: 0 0 8px #ffb1d2;
+    line-height: 1.4;
+    margin-top: 0;
+}
+
+.paper p {
+    line-height: 1.85;
+    font-size: 15px;
+    text-align: justify;
+}
+
+.paper strong {
+    color: #e21b70;
+    font-size: 16px;
+}
+
+.btn-close {
+    border: none;
+    padding: 12px 28px;
+    border-radius: 25px;
+    background: linear-gradient(135deg, #ff6eac, #e91e75);
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 0 15px #ff3998;
+    touch-action: manipulation;
+    margin-top: 15px;
+    transition: transform .15s;
+}
+
+.btn-close:active {
+    transform: scale(.95);
+}
+
+@keyframes open {
+    from {
+        transform: scale(.8) translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
+}
+
+.music-btn {
+    position: fixed;
+    top: 18px;
+    right: 18px;
+    z-index: 40;
+    background: rgba(255, 20, 147, 0.25);
+    border: 1px solid rgba(255, 105, 180, 0.5);
+    color: #ffd2e8;
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    cursor: pointer;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 0 10px rgba(255, 22, 139, 0.3);
+}
+
+@media (max-width: 500px) {
+    .envelope {
+        right: 18px;
+        bottom: 50px;
+    }
+    .hint {
+        right: 10px;
+        bottom: 125px;
+    }
+    .paper {
+        padding: 20px;
+    }
+}
+</style>
+</head>
+
+<body>
+<button class="music-btn" onclick="toggleMusic()" id="musicBtn">🎵 Bật nhạc</button>
+
+<div id="sky"></div>
+
+<div class="heading">Gửi em, người anh yêu ❤️</div>
+<div class="subtitle">Em là điều dịu dàng nhất đến bên cuộc đời anh 💗</div>
+
+<div class="hint">Chạm vào lá thư nhé 💌</div>
+
+<div class="envelope" onclick="openLetter()" role="button" aria-label="Mở lá thư">
+    <div class="heart-seal">❤️</div>
+</div>
+
+<div class="modal" id="modal" onclick="closeOutside(event)">
+    <div class="paper">
+        <h2>Gửi em, người cô gái anh thương 💗</h2>
+        <p>
+            Anh không biết từ bao giờ em đã trở thành
+            một người đặc biệt đến thế trong lòng anh.<br><br>
+
+            Mỗi ngày trôi qua, anh đều nhớ đến em.
+            Đôi khi chỉ một tin nhắn nhỏ của em cũng đủ
+            khiến cả ngày của anh trở nên thật tuyệt vời.<br><br>
+
+            Anh muốn được ở bên em, quan tâm em,
+            lắng nghe những câu chuyện của em, cùng em
+            chia sẻ niềm vui và cả những lúc em buồn.<br><br>
+
+            Anh biết mình không phải người hoàn hảo,
+            nhưng anh sẽ luôn cố gắng yêu em bằng sự
+            chân thành, dịu dàng và trân trọng nhất.<br><br>
+
+            Nếu có những ngày em mệt mỏi với thế giới,
+            anh mong mình có thể trở thành nơi bình yên
+            để em tựa vào và được là chính mình.<br><br>
+
+            Anh không biết tương lai sẽ có những gì,
+            nhưng hiện tại, anh thật lòng muốn nắm tay em,
+            cùng em đi qua thật nhiều ngày tháng phía trước.<br><br>
+
+            <div style="text-align: center; margin: 10px 0;">
+                <strong style="color: #e21b70; font-size: 18px;">ANH YÊU EM NHIỀU LẮM! ❤️</strong>
+            </div>
+
+            Vào ngày <strong>6/9/2026</strong> bánh xe số phận đã quay,
+            từ bạn trong 1 tự game mà hai ta đã trở thành
+            1 phần không thể thiếu của nhau, đó là sự tình
+            cờ hay do đó là sự sắp đặt của nhân duyên,
+            tuy chúng ta cách xa nhau nhưng qua các đoạn
+            tin nhắn yêu thương thì khoảng cách chỉ là
+            1 con số.<br><br>
+
+            Nhân ngày <strong>20/10</strong> anh chúc em luôn xinh đẹp,
+            luôn mạnh khoẻ, chăm ngoan học giỏi và nhớ
+            nghe lời ba má. Anh sẽ luôn là nơi tạo niềm vui
+            và là nơi an ủi những nỗi buồn sâu bên trong tim.<br><br>
+
+            <div style="text-align: center; font-weight: bold; color: #d81b6c; margin-top: 10px;">
+                CẢM ƠN EM VÌ ĐÃ XUẤT HIỆN TRONG CUỘC ĐỜI ANH 💌
+            </div>
+        </p>
+        <button class="btn-close" onclick="closeLetter()">Gấp thư lại 💕</button>
+    </div>
+</div>
+
+<script>
+const messages = [
+    "Anh yêu em ❤️",
+    "I love you 💗",
+    "Nhớ em nhiều lắm 💕",
+    "Anh thương em",
+    "Anh sẽ luôn quan tâm em 💖",
+    "Em là điều tuyệt vời nhất",
+    "Thương em thật nhiều",
+    "You are my love 💘",
+    "Trái tim anh thuộc về em",
+    "Em là cả thế giới của anh",
+    "Chỉ yêu mình em thôi 💓",
+    "Mỗi ngày đều nhớ em",
+    "Forever love 💞",
+    "Em luôn ở trong trái tim anh",
+    "Anh thích nụ cười của em ❤️",
+    "My sweetheart 💝",
+    "Muốn ở bên em",
+    "Be mine 💌",
+    "Mong em luôn hạnh phúc",
+    "Mãi yêu em",
+    "Em là ngoại lệ của anh",
+    "Gặp em là may mắn",
+    "Yêu em hơn hôm qua",
+    "Anh nhớ em 💗",
+    "Em thật đặc biệt",
+    "Cảm ơn em đã đến",
+    "💕", "💖", "💗", "❤️", "💘"
+];
+
+const sky = document.getElementById("sky");
+
+function createFloatingText(initialDelaySec) {
+    const item = document.createElement("div");
+    item.className = "floating";
+    item.textContent = messages[Math.floor(Math.random() * messages.length)];
+    item.style.left = Math.random() * 85 + 2 + "%";
+    item.style.fontSize = (14 + Math.random() * 10) + "px";
+
+    const duration = 9 + Math.random() * 5;
+    item.style.animationDuration = duration + "s";
+    if (initialDelaySec) {
+        item.style.animationDelay = initialDelaySec + "s";
+    }
+    sky.appendChild(item);
+
+    item.addEventListener("pointerdown", function(event) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        const rect = item.getBoundingClientRect();
+        const offsetX = event.clientX - rect.left;
+        const offsetY = event.clientY - rect.top;
+
+        item.classList.add("dragging");
+        item.style.left = rect.left + "px";
+        item.style.top = rect.top + "px";
+        item.style.bottom = "auto";
+
+        try {
+            item.setPointerCapture(event.pointerId);
+        } catch(e) {}
+
+        function moveText(e) {
+            item.style.left = (e.clientX - offsetX) + "px";
+            item.style.top = (e.clientY - offsetY) + "px";
+        }
+
+        function stopMoving(e) {
+            item.classList.remove("dragging");
+            item.removeEventListener("pointermove", moveText);
+            item.removeEventListener("pointerup", stopMoving);
+            item.removeEventListener("pointercancel", stopMoving);
+            try { item.releasePointerCapture(e.pointerId); } catch(err) {}
+        }
+
+        item.addEventListener("pointermove", moveText);
+        item.addEventListener("pointerup", stopMoving);
+        item.addEventListener("pointercancel", stopMoving);
+    });
+
+    const cleanupTime = (duration - (initialDelaySec || 0)) * 1000 + 400;
+    setTimeout(() => { if (item.parentNode) item.remove(); }, Math.max(1000, cleanupTime));
+}
+
+// Populate sky immediately
+for (let i = 0; i < 22; i++) {
+    createFloatingText(-((i * 0.5) % 10));
+}
+setInterval(() => createFloatingText(0), 450);
+
+function createHeart(initialDelaySec) {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.textContent = ["♡", "♥", "💕", "✨", "🌸"][Math.floor(Math.random() * 5)];
+    heart.style.left = Math.random() * 95 + 2 + "%";
+    heart.style.fontSize = (12 + Math.random() * 20) + "px";
+
+    const duration = 7 + Math.random() * 7;
+    heart.style.animationDuration = duration + "s";
+    if (initialDelaySec) {
+        heart.style.animationDelay = initialDelaySec + "s";
+    }
+    sky.appendChild(heart);
+
+    const cleanupTime = (duration - (initialDelaySec || 0)) * 1000 + 300;
+    setTimeout(() => { if (heart.parentNode) heart.remove(); }, Math.max(1000, cleanupTime));
+}
+
+for (let i = 0; i < 10; i++) {
+    createHeart(-((i * 0.7) % 8));
+}
+setInterval(() => createHeart(0), 600);
+
+function openLetter() {
+    document.getElementById("modal").style.display = "flex";
+}
+
+function closeLetter() {
+    document.getElementById("modal").style.display = "none";
+}
+
+function closeOutside(event) {
+    if (event.target.id === "modal") {
+        closeLetter();
+    }
+}
+
+document.addEventListener("keydown", function(event) {
+    if (event.key === "Escape") closeLetter();
+});
+
+// Romantic Web Audio Synthesizer
+let audioCtx = null;
+let isPlaying = false;
+let musicTimer = null;
+let noteIdx = 0;
+const notes = [
+    {f: 523.25, d: 450}, {f: 587.33, d: 450}, {f: 659.25, d: 650},
+    {f: 523.25, d: 450}, {f: 659.25, d: 450}, {f: 783.99, d: 900},
+    {f: 698.46, d: 450}, {f: 659.25, d: 450}, {f: 587.33, d: 450},
+    {f: 523.25, d: 650}, {f: 440.00, d: 900}, {f: 440.00, d: 450},
+    {f: 493.88, d: 450}, {f: 523.25, d: 650}, {f: 587.33, d: 450},
+    {f: 659.25, d: 450}, {f: 523.25, d: 900}
+];
+
+function playNote() {
+    if (!isPlaying) return;
+    try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+
+        const n = notes[noteIdx];
+        noteIdx = (noteIdx + 1) % notes.length;
+
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(n.f, audioCtx.currentTime);
+
+        gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + n.d / 1000 * 1.5);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + n.d / 1000 * 1.5);
+
+        musicTimer = setTimeout(playNote, n.d);
+    } catch(e) {}
+}
+
+function toggleMusic() {
+    const btn = document.getElementById("musicBtn");
+    if (isPlaying) {
+        isPlaying = false;
+        clearTimeout(musicTimer);
+        btn.textContent = "🎵 Bật nhạc";
+        btn.style.background = "rgba(255, 20, 147, 0.25)";
+    } else {
+        isPlaying = true;
+        playNote();
+        btn.textContent = "🎶 Tắt nhạc";
+        btn.style.background = "linear-gradient(135deg, #ff168b, #e91e75)";
+    }
+}
+</script>
+</body>
+</html>
